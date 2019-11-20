@@ -117,7 +117,7 @@ before (:all) do
 	context "Se puede insertar" do 
 		it "Un elemento en la lista" do	
 			expect(@list.size).to eq(0)
-			@list.push(@n1)
+			@list.push(@n5)
 			expect(@list.size).to eq(1)
 		end
 		it "Varios elementos en la lista" do 
@@ -133,6 +133,12 @@ before (:all) do
 			@drop = @list.pop_head()
 			expect(@list.size).to eq(3)
 			expect(@drop).to eq(@n4)
+		end
+		it " el ultimo elemento de la lista" do
+			expect(@list.size).to eq(3)
+			@drop = @list.pop_tail()
+			expect(@list.size).to eq(2)
+			expect(@drop).to eq(@n5)
 		end
 	end
 

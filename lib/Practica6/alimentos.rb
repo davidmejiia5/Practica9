@@ -48,7 +48,7 @@ class Lista
 
 	def push(val)
 		if(@size == 0)
-			@Head = val
+			@tail = val
 			val.next = nil
 		else
 			@head.prev = val
@@ -71,6 +71,17 @@ class Lista
 		end
 	end
 
+	def pop_tail()
+		if (size == 0)
+			puts "Lista vacia"
+		else
+			drop = @tail
+			(@tail.prev).next = nil
+			@tail = @tail.prev
+			@size = size - 1
+			return drop
+		end
+	end
 
 
 
