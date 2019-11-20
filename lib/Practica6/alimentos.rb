@@ -35,3 +35,20 @@ class Alimento
 
 end
 
+
+class Lista
+
+	attr_accessor :size, :head, :tail
+
+	def initialize()
+		@size = nil
+		@head = nil
+		@tail = nil
+	end
+
+
+
+
+
+end
+

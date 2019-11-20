@@ -25,8 +25,9 @@ before (:all) do
 		@n2 = Node.new(@tofu,nil,nil)
 		@n3 = Node.new(@nuez,@n1,@n2)
 		@n4 = Node.new(@pollo,@n3,@n1)
+		@n5 = Node.new(@queso,@n4,@n3)
 		
-
+		@list = Lista.new()
         end
 
         context "Debe existir" do
@@ -88,8 +89,8 @@ before (:all) do
 		end
 	end	
 	
-	context "Debe existir un" do
-		it "Nodo de la lista con sus datos, su siguiente y su previo" do
+	context "Debe existir" do
+		it "Un nodo de la lista con sus datos, su siguiente y su previo" do
 			expect(@n1.value).to eq(@chocolate)
 			expect(@n1.next).to eq nil
 			expect(@n1.prev).to eq nil
@@ -101,7 +102,17 @@ before (:all) do
 			expect(@n3.value).to eq(@nuez)
                         expect(@n3.next).to eq(@n1)
                         expect(@n3.prev).to eq(@n2)
+
+			expect(@n5.value).to eq(@queso)
+                        expect(@n5.next).to eq(@n4)
+                        expect(@n5.prev).to eq(@n3)
 		end
+
+		it "Una Lista con su cabeza y su cola" do 
+			expect(@list.head).to eq nil
+			expect(@list.tail).to eq nil
+		end
+
 	end
 
 end
