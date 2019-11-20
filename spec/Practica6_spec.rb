@@ -127,6 +127,14 @@ before (:all) do
 			expect(@list.size).to eq(4)
 		end
 	end
+	context "Se extrae el" do
+		it " primer elemento de la lista" do 
+			expect(@list.size).to eq(4)
+			@drop = @list.pop_head()
+			expect(@list.size).to eq(3)
+			expect(@drop).to eq(@n4)
+		end
+	end
 
 
 end

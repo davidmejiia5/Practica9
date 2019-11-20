@@ -59,6 +59,19 @@ class Lista
 		@size = @size + 1
 	end
 
+	def pop_head()
+		if (@size == 0)
+			puts "Lista vacia"
+		else
+			drop = @head
+			(@head.next).prev = nil
+			@head = @head.next
+			@size = @size - 1
+			return drop
+		end
+	end
+
+
 
 
 
