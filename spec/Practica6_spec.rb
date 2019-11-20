@@ -120,6 +120,12 @@ before (:all) do
 			@list.push(@n1)
 			expect(@list.size).to eq(1)
 		end
+		it "Varios elementos en la lista" do 
+			@list.push(@n2)
+			@list.push(@n3)
+			@list.push(@n4)
+			expect(@list.size).to eq(4)
+		end
 	end
 
 
