@@ -41,9 +41,22 @@ class Lista
 	attr_accessor :size, :head, :tail
 
 	def initialize()
-		@size = nil
+		@size = 0
 		@head = nil
 		@tail = nil
+	end
+
+	def push(val)
+		if(@size == 0)
+			@Head = val
+			val.next = nil
+		else
+			@head.prev = val
+			val.next = @head
+		end
+		@head = val
+		val.prev = nil
+		@size = @size + 1
 	end
 
 

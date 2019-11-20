@@ -112,7 +112,15 @@ before (:all) do
 			expect(@list.head).to eq nil
 			expect(@list.tail).to eq nil
 		end
-
 	end
+
+	context "Se puede insertar" do 
+		it "Un elemento en la lista" do	
+			expect(@list.size).to eq(0)
+			@list.push(@n1)
+			expect(@list.size).to eq(1)
+		end
+	end
+
 
 end
