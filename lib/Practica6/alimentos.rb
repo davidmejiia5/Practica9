@@ -1,3 +1,6 @@
+
+Node = Struct.new(:value, :next, :prev)
+
 class Alimento
 	
 	attr_accessor :ali, :gas, :te
