@@ -26,8 +26,18 @@ before (:all) do
 		@n3 = Node.new(@nuez,@n1,@n2)
 		@n4 = Node.new(@pollo,@n3,@n1)
 		@n5 = Node.new(@queso,@n4,@n3)
+		@n6 = Node.new(@cafe,@n4,@n3)
 		
 		@list = Lista.new()
+		@espa = Lista.new()
+		#@espa.push(@pollo)
+		#@espa.push(@lentejas)
+		#@espa.push(@huevo)
+		@vasca = Lista.new()
+		@vege = Lista.new()
+		@vgel = Lista.new()
+		@loka = Lista.new()
+
         end
 
         context "Debe existir" do
@@ -109,36 +119,37 @@ before (:all) do
 		end
 
 		it "Una Lista con su cabeza y su cola" do 
-			expect(@list.head).to eq nil
-			expect(@list.tail).to eq nil
+			@list.push(@n6)
+			expect(@list.head).to eq(@n6)
+			expect(@list.tail).to eq(@n6)
 		end
 	end
 
 	context "Se puede insertar" do 
 		it "Un elemento en la lista" do	
-			expect(@list.size).to eq(0)
-			@list.push(@n5)
 			expect(@list.size).to eq(1)
+			@list.push(@n5)
+			expect(@list.size).to eq(2)
 		end
 		it "Varios elementos en la lista" do 
 			@list.push(@n2)
 			@list.push(@n3)
 			@list.push(@n4)
-			expect(@list.size).to eq(4)
+			expect(@list.size).to eq(5)
 		end
 	end
 	context "Se extrae el" do
 		it " primer elemento de la lista" do 
-			expect(@list.size).to eq(4)
+			expect(@list.size).to eq(5)
 			@drop = @list.pop_head()
-			expect(@list.size).to eq(3)
+			expect(@list.size).to eq(4)
 			expect(@drop).to eq(@n4)
 		end
 		it " el ultimo elemento de la lista" do
-			expect(@list.size).to eq(3)
+			expect(@list.size).to eq(4)
 			@drop = @list.pop_tail()
-			expect(@list.size).to eq(2)
-			expect(@drop).to eq(@n5)
+			expect(@list.size).to eq(3)
+			expect(@drop).to eq(@n6)
 		end
 	end
 
