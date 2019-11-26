@@ -37,25 +37,25 @@ end
 
 
 class Lista
-
-	attr_accessor :size, :head, :tail
+	attr_accessor :size, :head, :tail, :n
 
 	def initialize()
 		@size = 0
-		@head = nil
-		@tail = nil
+		@head = Node.new(nil,nil,nil)
+		@tail = Node.new(nil,nil,nil)
 	end
 
 	def push(val)
+		n = Node.new(val,nil,nil)
 		if(@size == 0)
-			@tail = val
-			val.next = nil
+			@tail = n
+			n.next = nil
 		else
-			@head.prev = val
-			val.next = @head
+			@head.prev = n
+			n.next = @head
 		end
-		@head = val
-		val.prev = nil
+		@head = n
+		n.prev = nil
 		@size = @size + 1
 	end
 
@@ -63,7 +63,7 @@ class Lista
 		if (@size == 0)
 			puts "Lista vacia"
 		else
-			drop = @head
+			drop = @head.value
 			(@head.next).prev = nil
 			@head = @head.next
 			@size = @size - 1
@@ -75,7 +75,7 @@ class Lista
 		if (size == 0)
 			puts "Lista vacia"
 		else
-			drop = @tail
+			drop = @tail.value
 			(@tail.prev).next = nil
 			@tail = @tail.prev
 			@size = size - 1
