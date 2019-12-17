@@ -1,11 +1,13 @@
 
 Node = Struct.new(:value, :next, :prev)
 
+#Clase para definir los alimentos y sus valores nutricionales
 class Alimento
 	
 	include Comparable
 	attr_accessor :ali, :gas, :te, :pro, :carb, :lip
-
+	
+	#Constructor de la clase alimi¡ento
         def initialize(a,p,c,l,g,t)
                 @ali = a
                 @pro = p
@@ -14,44 +16,46 @@ class Alimento
                 @gas = g
                 @te = t
         end
+	#Metodo para obtener el nombre del alimento
 	def get_ali
                 return @ali
         end
-
+	#Método para obtener el co2
         def get_gas
                 return @gas
         end
-
+	#Método para obtener el terreno
         def get_te
                 return @te
         end
-
+	#Método para obtener el valor energético 
         def valor_energetico
                 return (@pro+4)+(@carb+4)+(@lip+9)
         end
-
+	#Sobrecarga del to_s
         def to_s
                 "(#{@ali},#{@pro},#{@carb},#{@lip},#{@gas},#{@te})"
         end
 
-
+	#Método para poder comparar
 	def <=>(toCompare)
 		@ali <=> toCompare.ali
 	end
 
 end
 
-
+#Clase para representar alimentos en una lista
 class Lista
 	include Enumerable
 	attr_accessor :size, :head, :tail, :n
-
+	
+	#Constructor de la clase Lista
 	def initialize()
 		@size = 0
 		@head = Node.new(nil,nil,nil)
 		@tail = Node.new(nil,nil,nil)
 	end
-
+	#Método push
 	def push(val)
 		n = Node.new(val,nil,nil)
 		if(@size == 0)
@@ -65,7 +69,7 @@ class Lista
 		n.prev = nil
 		@size = @size + 1
 	end
-
+	#Método pop por la cabecera
 	def pop_head()
 		if (@size == 0)
 			puts "Lista vacia"
@@ -273,7 +277,10 @@ class Ambiental < Plato
 	def huella_nut
 		return (indice_energia + indice_huella)/2
 	end
-
+	
+	def incremento(v)
+		v.collect {|x| x*huella_nut}
+	end
 
 	def <=>(other)
 		#nombre_ <=> other.nombre_

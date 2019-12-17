@@ -240,5 +240,9 @@ before (:all) do
 		it "Mayor numero de huella nutricional" do
 			expect(@v.max).to eq(@ambiental1)
 		end
+		it "Incremento vector" do
+			expect(@v.max.incremento(@p)).to eq([29.85,34.2])
+		end
+
 	end
 end
