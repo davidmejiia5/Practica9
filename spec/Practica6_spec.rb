@@ -50,6 +50,10 @@ before (:all) do
 		@v = Array.new
 		@v.push(@ambiental1)
 		@v.push(@ambiental2)
+
+		@p = Array.new
+		@p.push(9.95)
+		@p.push(11.4)
 		
         end
 
@@ -217,7 +221,7 @@ before (:all) do
 		end
 
 		it "Que sea comparable" do
-			expect(@ambiental1 <=> @ambiental2).to eq(1)
+			expect(@ambiental1 <=> @ambiental2).to eq(0)
 		end
 	end
 
@@ -233,8 +237,8 @@ before (:all) do
 		end
 	end
 	context "Comprobando array de platos" do
-		it "Numero de plato" do
-			expect(@v.size).to eq(2)
+		it "Mayor numero de huella nutricional" do
+			expect(@v.max).to eq(@ambiental1)
 		end
 	end
 end
