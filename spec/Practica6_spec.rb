@@ -21,23 +21,36 @@ before (:all) do
 		@desayuno = 4*@queso.valor_energetico + 5*@leche.valor_energetico + 6*@cafe.valor_energetico
 		@cena = 3*@carne_vaca.valor_energetico + 4*@salmon.valor_energetico + 5*@cerveza.valor_energetico
 		
-		@n1 = Node.new(@chocolate,nil,nil)
-		@n2 = Node.new(@tofu,nil,nil)
-		@n3 = Node.new(@nuez,@n1,@n2)
-		@n4 = Node.new(@pollo,@n3,@n1)
-		@n5 = Node.new(@queso,@n4,@n3)
-		@n6 = Node.new(@cafe,@n4,@n3)
-		
+		@list1 = Lista.new()
 		@list = Lista.new()
 		@espa = Lista.new()
-		#@espa.push(@pollo)
-		#@espa.push(@lentejas)
-		#@espa.push(@huevo)
 		@vasca = Lista.new()
 		@vege = Lista.new()
 		@vgel = Lista.new()
 		@loka = Lista.new()
 
+		@plato1 = Plato.new("random")
+		@plato1.insert_alimento(@chocolate)
+		@plato1.insert_gramos(200)
+		@plato1.insert_alimento(@carne_vaca)
+      		@plato1.insert_gramos(500)
+
+		@ambiental1 = Ambiental.new("ambientalRandom")
+		@ambiental1.insert_alimento(@chocolate)
+		@ambiental1.insert_gramos(200)
+		@ambiental1.insert_alimento(@carne_vaca)
+		@ambiental1.insert_gramos(500)
+
+	  	@ambiental2 = Ambiental.new("Salmonete")
+		@ambiental2.insert_alimento(@salmon)
+                @ambiental2.insert_gramos(225)
+                @ambiental2.insert_alimento(@tofu)
+                @ambiental2.insert_gramos(150)
+		
+		@v = Array.new
+		@v.push(@ambiental1)
+		@v.push(@ambiental2)
+		
         end
 
         context "Debe existir" do
@@ -101,40 +114,29 @@ before (:all) do
 	
 	context "Debe existir" do
 		it "Un nodo de la lista con sus datos, su siguiente y su previo" do
-			expect(@n1.value).to eq(@chocolate)
-			expect(@n1.next).to eq nil
-			expect(@n1.prev).to eq nil
-			
-			expect(@n2.value).to eq(@tofu)
-			expect(@n2.next).to eq nil
-			expect(@n2.prev).to eq nil
-
-			expect(@n3.value).to eq(@nuez)
-                        expect(@n3.next).to eq(@n1)
-                        expect(@n3.prev).to eq(@n2)
-
-			expect(@n5.value).to eq(@queso)
-                        expect(@n5.next).to eq(@n4)
-                        expect(@n5.prev).to eq(@n3)
+			@list1.push(@cafe)
+			expect((@list1.head).value).to eq(@cafe)
+			expect((@list1.head).next).to eq nil
+			expect((@list1.head).prev).to eq nil
 		end
 
 		it "Una Lista con su cabeza y su cola" do 
-			@list.push(@n6)
-			expect(@list.head).to eq(@n6)
-			expect(@list.tail).to eq(@n6)
+			@list.push(@cafe)
+			expect((@list.head).value).to eq(@cafe)
+			expect((@list.tail).value).to eq(@cafe)
 		end
 	end
 
 	context "Se puede insertar" do 
 		it "Un elemento en la lista" do	
 			expect(@list.size).to eq(1)
-			@list.push(@n5)
+			@list.push(@nuez)
 			expect(@list.size).to eq(2)
 		end
 		it "Varios elementos en la lista" do 
-			@list.push(@n2)
-			@list.push(@n3)
-			@list.push(@n4)
+			@list.push(@leche)
+			@list.push(@cerdo)
+			@list.push(@pollo)
 			expect(@list.size).to eq(5)
 		end
 	end
@@ -143,15 +145,96 @@ before (:all) do
 			expect(@list.size).to eq(5)
 			@drop = @list.pop_head()
 			expect(@list.size).to eq(4)
-			expect(@drop).to eq(@n4)
+			expect(@drop).to eq(@pollo)
 		end
 		it " el ultimo elemento de la lista" do
 			expect(@list.size).to eq(4)
 			@drop = @list.pop_tail()
 			expect(@list.size).to eq(3)
-			expect(@drop).to eq(@n6)
+			expect(@drop).to eq(@cafe)
 		end
 	end
 
 
+	context "Que funcionen las listas" do
+		it "Sea enumerable" do
+			expect(@list1.count).to eq(1)
+	end
+		it "Tamaño" do
+			expect(@list1.size).to eq(1)
+		end
+	end
+
+	context "Que funcionen los platos" do
+		it "Tenga nombre" do
+			expect(@plato1.nombre_).to eq("random")
+	  	end
+
+	  	it "Exista conjunto de alimentos" do
+			expect(@plato1.get_alimentos.size).to eq(2)
+	 	end
+
+		it "Exista conjunto de gramos" do
+			expect(@plato1.get_gramos.size).to eq(2)
+	 	end
+
+		it "Porcentaje de proteinas" do
+			expect(@plato1.get_proteinas).to eq(116.1)
+		end
+
+		it "Porcentaje de lipidos" do
+			expect(@plato1.get_lipidos).to eq(75.5)
+	  	end	
+
+		it "Porcentaje de carbohidratos" do
+			expect(@plato1.get_carbohidratos).to eq(94.0)
+		end
+		it "VCT" do
+			expect(@plato1.get_VCT).to eq(10639.3)
+	  	end
+
+		it "Plato formateado" do
+			expect(@plato1.to_s).to eq ("El plato esta formado por: carne_vaca chocolate ")
+		end
+	end
+
+	context "Que funcione la herencia" do
+		it "CO2" do
+			expect(@ambiental1.get_co2).to eq(254.6)
+		end
+
+		it "m2" do
+			expect(@ambiental1.get_m2).to eq(826.8)
+		end
+
+		it "Eficiencia energetica formateada" do
+			expect(@ambiental1.to_s).to eq("CO2: 254.6 M^2: 826.8")
+		end
+
+		it "Comprobar Clase, Objeto y Jerarquía" do
+			expect(@ambiental1.class.to_s).to eq("Ambiental")
+			expect(@ambiental1.instance_of? Ambiental).to eq(true)
+		end
+
+		it "Que sea comparable" do
+			expect(@ambiental1 <=> @ambiental2).to eq(1)
+		end
+	end
+
+	context "Que funcionen los indices" do 
+		it "Indice de impacto energia" do
+			expect(@ambiental1.indice_energia).to eq(1)
+		end
+		it "Indice de impacto huella de carbono"do
+			expect(@ambiental1.indice_huella).to eq(3)
+		end
+		it "Huella nutricional"do
+			expect(@ambiental1.huella_nut).to eq(2)
+		end
+	end
+	context "Comprobando array de platos" do
+		it "Numero de plato" do
+			expect(@v.size).to eq(2)
+		end
+	end
 end
