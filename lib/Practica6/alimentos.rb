@@ -81,7 +81,7 @@ class Lista
 			return drop
 		end
 	end
-
+	#Método de extracción por la cola
 	def pop_tail()
 		if (size == 0)
 			puts "Lista vacia"
@@ -93,7 +93,7 @@ class Lista
 			return drop
 		end
 	end
-
+	#Método iteración de la lista
 	def each
 		nodo = @head
 		while (nodo != nil)
@@ -103,31 +103,32 @@ class Lista
 	end
 end
 
-
+#Clase para poder representar plato
 class Plato
 	attr_accessor :nombre_, :listAlimentos_
+	#Constructor de la clase Plato
 	def initialize(name)
 		@nombre_ = name
 		@listAlimentos_ = Lista.new
 		@listGramos_ = Lista.new
 	end
-
+	#Método para insertar alimento en la lista
 	def insert_alimento(alimento)
 		@listAlimentos_.push(alimento)
 	end
-
+	#Método para insertar gramos en la lista
 	def insert_gramos(gramos)
 		@listGramos_.push(gramos)
 	end
-
+	#Método para devolver la lista de alimentos 
 	def get_alimentos
 		return @listAlimentos_
 	end
-
+	#Método para devolver la lista de gramos
 	def get_gramos
 		return @listGramos_
 	end
-
+	#Método para obtener el porcentaje de proteinas del plato 
 	def get_proteinas
 		p = 0
 		iter = 0
@@ -145,7 +146,7 @@ class Plato
 		end
 		return p
 	end
-
+	#Método para obtener el porcentaje de lípidos del plato
 	def get_lipidos
 		l = 0
                 iter = 0
@@ -163,7 +164,7 @@ class Plato
                 end
                 return l
 	end
-
+	#Método para obtener el porcentaje de carbohidratos del plato
 	def get_carbohidratos
 		c = 0
                 iter = 0
@@ -181,7 +182,7 @@ class Plato
                 end
                 return c
 	end
-	
+	#Método para obtener el valor calórico total
 	def get_VCT
 		total = 0
 		@listGramos_.each do |grams|
@@ -193,7 +194,7 @@ class Plato
 		return ((pro*4)+(li*9)+(car*4))
 	end
 
-
+	#Método to_s sobrecargado
 	def to_s
 		alimentos = "El plato esta formado por: " 
 		@listAlimentos_.each do |element|
@@ -204,11 +205,12 @@ class Plato
 	end
 end
 
+#Clase Ambiental, hereda de Plato
 class Ambiental < Plato
 	include Comparable
 
 	attr_accessor :co2, :m2
-
+	#Método para obtener el c02 total del plato por gramos
 	def get_co2
 		co = 0
                 iter = 0
@@ -227,7 +229,7 @@ class Ambiental < Plato
 		@co2 = co
                 return co
 	end
-
+	#Método para obtener la cantidad de terreno por gramos 
 	def get_m2
 		m = 0
                 iter = 0
@@ -244,9 +246,9 @@ class Ambiental < Plato
                         iterador2 = 0
                 end
                 @m2 = m
-                return m
+                return m	
 	end
-
+	#Sobrecarga del to_s
 	def to_s
 		texto = "CO2: "
 		texto = texto + get_co2.to_s
@@ -254,7 +256,7 @@ class Ambiental < Plato
 		texto = texto + get_m2.to_s
                 return texto
 	end
-
+	#Métdodo para clcular el índice de energía
 	def indice_energia
 		if (get_co2 < 800)
 			return 1
@@ -264,6 +266,7 @@ class Ambiental < Plato
 			return 3
 		end
 	end
+	#Método para calcular el indice de huella de carbono 
 	def indice_huella
 		if (get_VCT < 670)
 			return 1
@@ -273,15 +276,15 @@ class Ambiental < Plato
 			return 3
 		end
 	end
-
+	#Método para calcular la huella nutricional
 	def huella_nut
 		return (indice_energia + indice_huella)/2
 	end
-	
+	#Método para incrementar el vector de precios
 	def incremento(v)
 		v.collect {|x| x*huella_nut}
 	end
-
+	#Método para poder comparar
 	def <=>(other)
 		#nombre_ <=> other.nombre_
 		huella_nut <=> other.huella_nut
