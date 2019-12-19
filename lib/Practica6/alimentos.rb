@@ -103,7 +103,7 @@ class Lista
 	end
 end
 
-#Clase para poder representar plato
+#Clase para poder representar un plato
 class Plato
 	attr_accessor :nombre_, :listAlimentos_
 	#Constructor de la clase Plato
