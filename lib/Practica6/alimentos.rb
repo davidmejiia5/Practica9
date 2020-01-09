@@ -291,3 +291,147 @@ class Ambiental < Plato
 	end
 end
 
+#Clase Menú
+class Menu
+
+	attr_accessor :name_, :platos_, :prices_
+
+	def initialize(name, &block)
+		@name_ = name
+		@platos_ = Array.new
+		@prices_ = Array.new
+
+		if block_given?
+                        if block.arity == 1
+                                yield self
+                        else
+                                instance_eval(&block)
+                        end
+                end
+	end
+
+	def component(platoNuevo)
+		@platos_.push(platoNuevo)
+	end
+
+	def price(price)
+		@prices_.push(price)
+	end
+	
+	def to_s
+		preciototal = 0
+		@prices_.collect { |x| preciototal = preciototal + x}
+		output = "#{@name_}"
+		output << " = #{preciototal}€ "
+		output << "Contiene: "
+		@platos_.zip(@prices_).each do |x,y|
+			output << "#{x.name_} = #{y}€ "
+		end
+		output
+	end
+end
+
+#Clase Plato DSL
+class PlatoDSL
+
+	attr_accessor :name_, :listaDeAlimentos_, :listaDeGramos_
+
+	def initialize(name, &block)
+                @name_ = name
+		@listAlimentos_ = Array.new
+		@listGramos_ = Array.new
+
+                if block_given?
+                        if block.arity == 1
+                                yield self
+                        else
+                                instance_eval(&block)
+                        end
+                end
+        end
+
+	def ingredient(alimento, options = {})
+		@listAlimentos_.push(alimento)
+		#@listDeGramos_.push("#{options[:amount]}")
+	end
+
+	def quantity(gramos)
+		@listGramos_.push(gramos)
+	end
+
+	#Método para obtener el porcentaje de proteinas del plato 
+        def get_proteinas
+                p = 0
+                iter = 0
+                iterador2 = 0
+                @listGramos_.each do |gramos|
+                        gr = gramos
+                        iter = iter + 1
+                        @listAlimentos_.each do |element|
+                                iterador2 = iterador2 + 1
+                                if (iter == iterador2)
+                                        p = p + gr*element.pro/100
+                                end
+                        end
+                        iterador2 = 0
+                end
+                return p
+        end
+        #Método para obtener el porcentaje de lípidos del plato
+        def get_lipidos
+                l = 0
+                iter = 0
+                iterador2 = 0
+                @listGramos_.each do |gramos|
+                        gr = gramos
+                        iter = iter + 1
+                        @listAlimentos_.each do |element|
+                                iterador2 = iterador2 + 1
+                                if (iter == iterador2)
+                                        l = l + gr*element.lip/100
+                                end
+                        end
+                        iterador2 = 0
+                end
+                return l
+        end
+        #Método para obtener el porcentaje de carbohidratos del plato
+        def get_carbohidratos
+                c = 0
+                iter = 0
+                iterador2 = 0
+                @listGramos_.each do |gramos|
+                        gr = gramos
+                        iter = iter + 1
+                        @listAlimentos_.each do |element|
+                                iterador2 = iterador2 + 1
+                                if (iter == iterador2)
+                                        c = c + gr*element.carb/100
+                                end
+                        end
+                        iterador2 = 0
+                end
+                return c
+        end
+
+
+	def get_VCT
+                total = 0
+                @listGramos_.each do |grams|
+                        total = total + grams
+                end
+                pro = (get_proteinas*total)/100
+                li = (get_lipidos*total)/100
+                car = (get_carbohidratos*total)/100
+                #@vct_ = ((pro*4)+(li*9)+(car*4))
+                return ((pro*4)+(li*9)+(car*4))
+                #return @vct_
+        end
+
+	def to_s
+		@listAlimentos_.collect { |x| x.ali }
+		#@listGramos_.collect { |x| x }
+	end
+end
+
+

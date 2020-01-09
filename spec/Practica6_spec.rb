@@ -55,7 +55,69 @@ before (:all) do
 		@p.push(9.95)
 		@p.push(11.4)
 		
-        end
+		
+		
+	  @platoDSL2 = PlatoDSL.new("lentejas") do
+
+		lentejas = Alimento.new("lentejas",23.5,52.0,1.4,0.4,3.4)
+          	nuez = Alimento.new("nuez",20.0,21.0,54.0,0.3,7.9)
+
+		ingredient lentejas
+		quantity 200
+		ingredient nuez
+		quantity 500
+	  end
+
+	  @platoDSL1 = PlatoDSL.new("choco carne") do
+                chocolat = Alimento.new("chocolate",5.3,47.0,30.0,2.3,3.4)
+                carne_papas = Alimento.new("carne_papas",21.1,0.0,3.1,50.0,164.0)
+                ingredient chocolat
+                quantity 200
+                ingredient carne_papas
+                quantity 500
+          end
+
+	@menuNew = Menu.new("Combinado 1º") do
+
+		platoDSL1 = PlatoDSL.new("choco carne") do
+                	chocolat = Alimento.new("chocolate",5.3,47.0,30.0,2.3,3.4)
+                	carne_papas = Alimento.new("carne_papas",21.1,0.0,3.1,50.0,164.0)
+                	ingredient chocolat
+                	quantity 200
+                	ingredient carne_papas
+                	quantity 500
+          	end
+
+		platoDSL2 = PlatoDSL.new("lentejas") do
+	                lentejas = Alimento.new("lentejas",23.5,52.0,1.4,0.4,3.4)
+	                nuez = Alimento.new("nuez",20.0,21.0,54.0,0.3,7.9)
+	                ingredient lentejas
+	                quantity 200
+	                ingredient nuez
+                	quantity 500
+	        end
+
+
+                component platoDSL1
+                price 5.50
+
+                component platoDSL2
+                price 4.70
+          end
+	  end
+
+
+	context "Que el DSL" do
+		it "Funcione con los platos" do
+			expect(@platoDSL1.name_).to eq("choco carne")
+			expect(@platoDSL1.get_VCT).to eq(10639.3)
+		end
+
+		it "Funcione con los menus" do
+			expect(@menuNew.name_).to eq("Combinado 1º")
+			expect(@menuNew.to_s).to eq("Combinado 1º = 10.2€ Contiene: choco carne = 5.5€ lentejas = 4.7€ " )
+		end
+  	end
 
         context "Debe existir" do
                 it "Un nombre para cada alimento" do
@@ -241,7 +303,7 @@ before (:all) do
 			expect(@v.max).to eq(@ambiental1)
 		end
 		it "Incremento vector" do
-			expect(@v.max.incremento(@p)).to eq([29.85,34.2])
+			expect(@v.max.incremento(@p)).to eq([19.9,22.8])
 		end
 
 	end
